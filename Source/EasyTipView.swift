@@ -643,6 +643,16 @@ open class EasyTipView: UIView {
             drawText(bubbleFrame, context: context)
         case .view (let view):
             addSubview(view)
+            if #available(iOS 9.0, *) {
+                let horizontal = view.frame.origin.x
+                let vertical = view.frame.origin.y
+                view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: horizontal).isActive = true
+                view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -horizontal).isActive = true
+                view.topAnchor.constraint(equalTo: self.topAnchor, constant: vertical).isActive = true
+                view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -vertical).isActive = true
+            } else {
+                // Fallback on earlier versions
+            }
         }
         
         drawShadow()
